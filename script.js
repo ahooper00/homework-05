@@ -57,7 +57,7 @@ var myDay = [
 
 // A timer showing the current day and time
 function timer() {
-    var currentTimeAndDate = moment();
+    let currentTimeAndDate = moment();
     $("#currentTime").text(currentTimeAndDate.format("LTS"));
     $("#currentDay").text(currentTimeAndDate.format("dddd, MMMM Do, YYYY"));
 };
@@ -65,61 +65,68 @@ function timer() {
 setInterval(timer, 1000);
 
 function showPlanner() {
-    for (var i = 0; i < myDay.length; i++) {
-        var row = $("<div>");
+    for (let i = 0; i < myDay.length; i++) {
+        const row = $("<div>");
         $(row).attr("id", myDay[i].hour);
         // $(row).text("This is a test");
         row.appendTo('#container');
 
-        var timeHour = $("<div>");
+        const timeHour = $("<div>");
         $(timeHour).attr("class", "col col-lg-1 time a1");
         $(timeHour).text(myDay[i].hour + myDay[i].meridiem);
         timeHour.appendTo(row);
 
-        var eventDiv = $("<div>");
+        const eventDiv = $("<div>");
         $(eventDiv).attr("class", "col col-lg-10 makeEvent a2");
         eventDiv.appendTo(row);
 
-        var eventText = $("<input>");
+        const eventText = $("<input>");
         $(eventText).attr("id", "eventInput");
         $(eventText).val(myDay[i].reminder);
         eventText.appendTo(eventDiv);
 
-        var save = $("<button>");
+        const save = $("<button>");
         $(save).attr("class", "col col-lg-1 save a3");
         $(save).text("save");
         save.appendTo(row);
-        
+
+        function handleSubmit() {
+            const description = $(eventText).val();
+            console.log(description);
+            $(eventDiv).append('<li>' + description + '</li>');
+            $(eventText).val('');
+        }
+        $(save).on("click", handleSubmit);
     };
 };
 showPlanner();
 
 // Input a description into event space
-var addEvent = $(".makeEvent");
+// var addEvent = $(".makeEvent");
 
-function handleFormSubmit(event) {
-    event.preventDefault();
+// function handleFormSubmit(event) {
+//     event.preventDefault();
 
-    var description = $('[id="makeEvent"]').val();
+//     var description = $('[id="makeEvent"]').val();
 
-    addEvent.append('<li>' + description + '</li>');
+//     addEvent.append('<li>' + description + '</li>');
 
-    addEvent.append('<button class="btn btn-danger delete-event-btn">Delete</button>');
+//     addEvent.append('<button class="btn btn-danger delete-event-btn">Delete</button>');
 
-    addEvent.append('<p>' + description + '</p>');
-    $('[class="makeEvent"]').val('');
-}
+//     addEvent.append('<p>' + description + '</p>');
+//     $('[class="makeEvent"]').val('');
+// }
 
-function handleDeleteBtn(event) {
-    var btnClicked = $('event.target');
-    btnClicked.parent('li').remove();
-}
+// function handleDeleteBtn(event) {
+//     var btnClicked = $('event.target');
+//     btnClicked.parent('li').remove();
+// }
 
 // When button clicked, event is saved
-var saveBtn = $(".save");
+// var saveBtn = $(".save");
 
-addEvent.on("click", ".delete-event-btn", handleDeleteBtn);
-saveBtn.on('click', handleFormSubmit);
+// addEvent.on("click", ".delete-event-btn", handleDeleteBtn);
+// saveBtn.on('click', handleFormSubmit);
 
 // I need to create interactive segments made up of hour blocks between 9am and 5pm
 // An event can be inputted into any of the timeblocks within these hours
