@@ -69,24 +69,27 @@ function showPlanner() {
         var row = $("<div>");
         $(row).attr("id", myDay[i].hour);
         // $(row).text("This is a test");
+        row.appendTo('#container');
 
         var timeHour = $("<div>");
         $(timeHour).attr("class", "col col-lg-1 time a1");
         $(timeHour).text(myDay[i].hour + myDay[i].meridiem);
+        timeHour.appendTo(row);
+
+        var eventDiv = $("<div>");
+        $(eventDiv).attr("class", "col col-lg-10 makeEvent a2");
+        eventDiv.appendTo(row);
 
         var eventText = $("<input>");
-        $(eventText).attr("class", "col col-lg-10 makeEvent a2");
+        $(eventText).attr("id", "eventInput");
         $(eventText).val(myDay[i].reminder);
+        eventText.appendTo(eventDiv);
 
         var save = $("<button>");
         $(save).attr("class", "col col-lg-1 save a3");
         $(save).text("save");
-
-        console.log(myDay[i].hour);
-        row.appendTo('#container');
-        timeHour.appendTo(row);
-        eventText.appendTo(row);
         save.appendTo(row);
+        
     };
 };
 showPlanner();
@@ -97,7 +100,7 @@ var addEvent = $(".makeEvent");
 function handleFormSubmit(event) {
     event.preventDefault();
 
-    var description = $('[class="makeEvent"]').val();
+    var description = $('[id="makeEvent"]').val();
 
     addEvent.append('<li>' + description + '</li>');
 
