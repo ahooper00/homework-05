@@ -3,7 +3,7 @@
 }
 
 body {
-  font-size: 16px;
+  font-size: 20px;
   line-height: 1;
 }
 
@@ -47,6 +47,7 @@ textarea {
   white-space: pre-wrap;
   height: 80px;
   border-top: 1px solid white;
+  min-height: 200px;
 }
 
 .hour {
@@ -90,4 +91,18 @@ textarea {
 .time,
 .save {
   text-align: center;
+}
+
+.time,
+.makeEvent,
+.save {
+  display: inline-block;
+  border: 2px solid black;
+  height: 100px;
+}
+
+.delete-event-btn {
+  float: right;
+  display: inline;
+  font-size: 10px;
 }
