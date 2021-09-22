@@ -7,15 +7,6 @@ body {
   line-height: 1;
 }
 
-textarea {
-  background: transparent;
-  border: none;
-  resize: none;
-  color: #000000;
-  border-left: 1px solid black;
-  padding: 10px;
-}
-
 .jumbotron {
   text-align: center;
   background-color: transparent;
@@ -43,12 +34,12 @@ textarea {
   border-radius: 15px;
 }
 
-.row {
+/* .row {
   white-space: pre-wrap;
   height: 80px;
   border-top: 1px solid white;
-  min-height: 200px;
-}
+  min-height: 200px; 
+} */
 
 .hour {
   background-color: #ffffff;
@@ -88,6 +79,11 @@ textarea {
   border: 5px solid black;
 }
 
+.time {
+  border-top-left-radius: 15px;
+  border-bottom-left-radius: 15px;
+}
+
 .time,
 .save {
   text-align: center;
@@ -108,5 +104,12 @@ textarea {
 }
 
 li {
-  
+  list-style-type: none;
+}
+
+#eventInput {
+  border: none;
+  width: 100%;
+  height: 40%;
+  font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
 }

@@ -1,5 +1,5 @@
 var myDay = [
-    { 
+    {
         block: "0",
         hour: "09",
         meridiem: "am",
@@ -68,16 +68,17 @@ function showPlanner() {
     for (let i = 0; i < myDay.length; i++) {
         const row = $("<div>");
         $(row).attr("id", myDay[i].hour);
+        $(row).attr("class", "row justify-content-center")
         // $(row).text("This is a test");
         row.appendTo('#container');
 
         const timeHour = $("<div>");
-        $(timeHour).attr("class", "col col-lg-1 time a1");
+        $(timeHour).attr("class", "col col-lg-1 time a1 bg-warning");
         $(timeHour).text(myDay[i].hour + myDay[i].meridiem);
         timeHour.appendTo(row);
 
         const eventDiv = $("<div>");
-        $(eventDiv).attr("class", "col col-lg-10 makeEvent a2");
+        $(eventDiv).attr("class", "col col-lg-9 makeEvent a2 colourcode");
         eventDiv.appendTo(row);
 
         const eventText = $("<input>");
@@ -86,7 +87,7 @@ function showPlanner() {
         eventText.appendTo(eventDiv);
 
         const save = $("<button>");
-        $(save).attr("class", "col col-lg-1 save a3");
+        $(save).attr("class", "col col-lg-1 save a3 saveBtn bg-info");
         $(save).text("save");
         save.appendTo(row);
 
@@ -98,8 +99,30 @@ function showPlanner() {
         }
         $(save).on("click", handleSubmit);
     };
+    localStorage.setItem("description", JSON.stringify(description));
 };
 showPlanner();
+
+
+
+// signUpButton.addEventListener("click", function(event) {
+//     event.preventDefault();
+    
+//     // create user object from submission
+//     var user = {
+//       firstName: firstNameInput.value.trim(),
+//       lastName: lastNameInput.value.trim(),
+//       email: emailInput.value.trim(),
+//       password: passwordInput.value.trim()
+//     };
+  
+//     // set new submission to local storage 
+//     localStorage.setItem("user", JSON.stringify(user));
+    
+//   });
+
+
+
 
 // Input a description into event space
 // var addEvent = $(".makeEvent");
