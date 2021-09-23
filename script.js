@@ -1,59 +1,69 @@
-var myDay = [
+// An array displaying the hour slots with the time, meridiem (am/pm), and reminder
+var defaultDay = [
     {
         block: "0",
         hour: "09",
         meridiem: "am",
-        reminder: ""
+        reminder: []
     },
     {
         block: "1",
         hour: "10",
         meridiem: "am",
-        reminder: ""
+        reminder: []
     },
     {
         block: "2",
         hour: "11",
         meridiem: "am",
-        reminder: ""
+        reminder: []
     },
     {
         block: "3",
         hour: "12",
         meridiem: "pm",
-        reminder: ""
+        reminder: []
     },
     {
         block: "4",
         hour: "01",
         meridiem: "pm",
-        reminder: ""
+        reminder: []
     },
     {
         block: "5",
         hour: "02",
         meridiem: "pm",
-        reminder: ""
+        reminder: []
     },
     {
         block: "6",
         hour: "03",
         meridiem: "pm",
-        reminder: ""
+        reminder: []
     },
     {
         block: "7",
         hour: "04",
         meridiem: "pm",
-        reminder: ""
+        reminder: []
     },
     {
         block: "8",
         hour: "05",
         meridiem: "pm",
-        reminder: ""
+        reminder: []
     },
-]
+];
+
+// Local storage gets any reminders that have been saved in the planner, as well as retrieving the planner itself
+let storedDay = localStorage.getItem("myDay");
+let myDay;
+if (storedDay == null) {
+    myDay = defaultDay;
+} else {
+    myDay = JSON.parse(storedDay);
+}
 
 // A timer showing the current day and time
 function timer() {
@@ -64,6 +74,7 @@ function timer() {
 
 setInterval(timer, 1000);
 
+// A planner displaying the time slots with a section to input events/reminders, and a save button
 function showPlanner() {
     for (let i = 0; i < myDay.length; i++) {
         const row = $("<div>");
@@ -72,6 +83,7 @@ function showPlanner() {
         // $(row).text("This is a test");
         row.appendTo('#container');
 
+        // This div displays the hour from 9am to 5pm
         const timeHour = $("<div>");
         $(timeHour).attr("class", "col col-lg-1 time a1 bg-warning");
         $(timeHour).text(myDay[i].hour + myDay[i].meridiem);
@@ -81,88 +93,51 @@ function showPlanner() {
         $(eventDiv).attr("class", "col col-lg-9 makeEvent a2 colourcode");
         eventDiv.appendTo(row);
 
+        // A section to write events/reminders
         const eventText = $("<input>");
         $(eventText).attr("id", "eventInput");
-        $(eventText).val(myDay[i].reminder);
-        eventText.appendTo(eventDiv);
+        $(eventText).attr("placeholder", "Enter reminder here");
+        eventText.appendTo(eventDiv)
 
+        for (let j = 0; j < myDay[i].reminder.length; j++) {
+            $(eventDiv).append('<li>' + myDay[i].reminder[j] + '</li>');
+        };
+
+        // A save button to save the event/reminder into the slot
         const save = $("<button>");
         $(save).attr("class", "col col-lg-1 save a3 saveBtn bg-info");
         $(save).text("save");
         save.appendTo(row);
 
+        // A function to handle the saving of a reminder, saving each as a list item
         function handleSubmit() {
             const description = $(eventText).val();
             console.log(description);
             $(eventDiv).append('<li>' + description + '</li>');
             $(eventText).val('');
+
+            // Attempt of inserting a delete button for each event inputted but could not get it to work
+            // const deleteBtn = $("<button>");
+            // $(deleteBtn).attr("class", "btn btn-danger delete-event-btn");
+            // $(deleteBtn).attr("type", "submit");
+            // deleteBtn.appendTo('li');
+
+            // Local storage saves reminders that are entered in the events section
+            myDay[i].reminder.push(description);
+            localStorage.setItem("myDay", JSON.stringify(myDay));
         }
+
+        // function handleDeleteBtn() {
+        //     const makeDelete = $(deleteBtn)
+        //     makeDelete('li').remove();
+        // }
+        // $(deleteBtn).on("click", handleDeleteBtn);
+
+        // Including an 'on click' event for the save button, which uses the handleSubmit function
         $(save).on("click", handleSubmit);
     };
-    localStorage.setItem("description", JSON.stringify(description));
 };
+
+// Calls the planner so that it is displayed on the page
 showPlanner();
 
-
-
-// signUpButton.addEventListener("click", function(event) {
-//     event.preventDefault();
-    
-//     // create user object from submission
-//     var user = {
-//       firstName: firstNameInput.value.trim(),
-//       lastName: lastNameInput.value.trim(),
-//       email: emailInput.value.trim(),
-//       password: passwordInput.value.trim()
-//     };
-  
-//     // set new submission to local storage 
-//     localStorage.setItem("user", JSON.stringify(user));
-    
-//   });
-
-
-
-
-// Input a description into event space
-// var addEvent = $(".makeEvent");
-
-// function handleFormSubmit(event) {
-//     event.preventDefault();
-
-//     var description = $('[id="makeEvent"]').val();
-
-//     addEvent.append('<li>' + description + '</li>');
-
-//     addEvent.append('<button class="btn btn-danger delete-event-btn">Delete</button>');
-
-//     addEvent.append('<p>' + description + '</p>');
-//     $('[class="makeEvent"]').val('');
-// }
-
-// function handleDeleteBtn(event) {
-//     var btnClicked = $('event.target');
-//     btnClicked.parent('li').remove();
-// }
-
-// When button clicked, event is saved
-// var saveBtn = $(".save");
-
-// addEvent.on("click", ".delete-event-btn", handleDeleteBtn);
-// saveBtn.on('click', handleFormSubmit);
-
-// I need to create interactive segments made up of hour blocks between 9am and 5pm
-// An event can be inputted into any of the timeblocks within these hours
-// Colour coded to represent past, present or future events
-// Click on a time, and presented with a form??
-
-// var event = {
-//     startTime: "",
-//     endTime: "",
-//     reminder: ""
-// };
-
-// Where do put the reminder?
-// How to put the reminder in to that spot?
-// How to I save the reminder?
-// How do I add a time to the reminder?
